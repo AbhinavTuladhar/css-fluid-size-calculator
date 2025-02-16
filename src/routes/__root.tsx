@@ -7,7 +7,7 @@ export const Route = createRootRoute({
     <>
       <div className="min-h-dvh text-white">
         <Header />
-        <main className="bg-background">
+        <main className="bg-background content-grid py-6">
           <Outlet />
         </main>
       </div>

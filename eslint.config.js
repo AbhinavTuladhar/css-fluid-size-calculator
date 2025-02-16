@@ -3,6 +3,8 @@ import globals from 'globals'
 import reactHooks from 'eslint-plugin-react-hooks'
 import reactRefresh from 'eslint-plugin-react-refresh'
 import tseslint from 'typescript-eslint'
+import simpleImportSort from 'eslint-plugin-simple-import-sort'
+import unusedImports from 'eslint-plugin-unused-imports'
 
 export default tseslint.config(
   { ignores: ['dist'] },
@@ -16,12 +18,43 @@ export default tseslint.config(
     plugins: {
       'react-hooks': reactHooks,
       'react-refresh': reactRefresh,
+      'simple-import-sort': simpleImportSort,
+      'unused-imports': unusedImports,
     },
     rules: {
       ...reactHooks.configs.recommended.rules,
-      'react-refresh/only-export-components': [
+      'react-refresh/only-export-components': ['warn', { allowConstantExport: true }],
+      'simple-import-sort/imports': [
+        'error',
+        {
+          groups: [
+            // `react` first, `next` second, then packages starting with a character
+            ['^react$', '^next', '^[a-z]'],
+            // Packages starting with `~`
+            ['^~'],
+            // Packages starting with `@`
+            ['^@'],
+            // Imports starting with `../`
+            ['^\\.\\.(?!/?$)', '^\\.\\./?$'],
+            // Imports starting with `./`
+            ['^\\./(?=.*/)(?!/?$)', '^\\.(?!/?$)', '^\\./?$'],
+            // Style imports
+            ['^.+\\.s?css$'],
+            // Side effect imports
+            ['^\\u0000'],
+          ],
+        },
+      ],
+      'no-unused-vars': 'off', // or "@typescript-eslint/no-unused-vars": "off",
+      'unused-imports/no-unused-imports': 'error',
+      'unused-imports/no-unused-vars': [
         'warn',
-        { allowConstantExport: true },
+        {
+          vars: 'all',
+          varsIgnorePattern: '^_',
+          args: 'after-used',
+          argsIgnorePattern: '^_',
+        },
       ],
     },
   },

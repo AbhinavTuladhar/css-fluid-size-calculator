@@ -1,6 +1,8 @@
-import { useForm } from 'react-hook-form'
-import { z } from 'zod'
+import { ChangeEvent } from 'react'
+import { ControllerRenderProps, useForm } from 'react-hook-form'
 
+import useSizes from '@/store/useSizes'
+import { SizesFormValues } from '@/types'
 import { sizesFormSchema } from '@/types/schemas'
 import { zodResolver } from '@hookform/resolvers/zod'
 
@@ -17,12 +19,54 @@ import {
 import { Input } from '../ui/input'
 
 const SizesForm = () => {
-  const form = useForm<z.infer<typeof sizesFormSchema>>({
+  const {
+    minValue,
+    maxValue,
+    minScreenSize,
+    maxScreenSize,
+    updateMinValue,
+    updateMaxValue,
+    updateMinScreenSize,
+    updateMaxScreenSize,
+  } = useSizes()
+
+  const form = useForm<SizesFormValues>({
     resolver: zodResolver(sizesFormSchema),
+    defaultValues: {
+      minValue,
+      maxValue,
+      minScreenSize,
+      maxScreenSize,
+    },
   })
 
-  const onSubmit = (data: z.infer<typeof sizesFormSchema>) => {
+  const onSubmit = (data: SizesFormValues) => {
     console.log(data)
+  }
+
+  const handleChange = (
+    field: ControllerRenderProps<SizesFormValues>,
+    event: ChangeEvent<HTMLInputElement>,
+  ) => {
+    const { name: fieldName, value: fieldValue } = event.target
+    field.onChange(fieldValue)
+
+    switch (fieldName) {
+      case 'minValue':
+        updateMinValue(Number(fieldValue))
+        break
+      case 'maxValue':
+        updateMaxValue(Number(fieldValue))
+        break
+      case 'minScreenSize':
+        updateMinScreenSize(Number(fieldValue))
+        break
+      case 'maxScreenSize':
+        updateMaxScreenSize(Number(fieldValue))
+        break
+      default:
+        break
+    }
   }
 
   return (
@@ -39,7 +83,7 @@ const SizesForm = () => {
               <FormItem>
                 <FormLabel>Min. Size</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
                 <FormDescription>The minimum value of your property.</FormDescription>
                 <FormMessage />
@@ -55,7 +99,7 @@ const SizesForm = () => {
               <FormItem>
                 <FormLabel>Max. Size</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
                 <FormDescription>The maximum value of your property.</FormDescription>
                 <FormMessage />
@@ -71,7 +115,7 @@ const SizesForm = () => {
               <FormItem>
                 <FormLabel>Min. Screen Size</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
                 <FormDescription>The minimum value of the viewport size.</FormDescription>
                 <FormMessage />
@@ -81,13 +125,13 @@ const SizesForm = () => {
         />
         <FormField
           control={form.control}
-          name="maxValue"
+          name="maxScreenSize"
           render={({ field }) => (
             <InputBox>
               <FormItem>
                 <FormLabel>Max Screen Size</FormLabel>
                 <FormControl>
-                  <Input {...field} />
+                  <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
                 <FormDescription>The maximum value of the viewport size.</FormDescription>
                 <FormMessage />

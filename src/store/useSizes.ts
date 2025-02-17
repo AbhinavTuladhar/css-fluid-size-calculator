@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-import { calculateFluidSizes } from '@/helpers/fluid-sizes'
+import { calculateSlopeAndIntercept } from '@/helpers/fluid-sizes'
 import { SizesFormValues } from '@/types'
 
 interface SizesState extends SizesFormValues {
@@ -15,7 +15,7 @@ interface SizesState extends SizesFormValues {
 // Helper function to update state and recalculate slope/intercept
 const updateStateAndRecalculate = (state: SizesState, newValues: Partial<SizesFormValues>) => {
   const updatedState = { ...state, ...newValues }
-  const { slope, intercept } = calculateFluidSizes(updatedState)
+  const { slope, intercept } = calculateSlopeAndIntercept(updatedState)
   return { ...updatedState, slope, intercept }
 }
 
@@ -28,7 +28,7 @@ const useSizes = create<SizesState>(set => {
   }
 
   // Calculate initial slope and intercept
-  const { slope, intercept } = calculateFluidSizes(defaultValues)
+  const { slope, intercept } = calculateSlopeAndIntercept(defaultValues)
 
   return {
     ...defaultValues,

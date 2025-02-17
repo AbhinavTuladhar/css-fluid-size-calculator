@@ -1,5 +1,5 @@
 import SizesForm from '@/components/sizes-form'
-import useSizes from '@/store/useSizes'
+import SizesTable from '@/components/sizes-table'
 import { createFileRoute } from '@tanstack/react-router'
 
 export const Route = createFileRoute('/')({
@@ -7,15 +7,14 @@ export const Route = createFileRoute('/')({
 })
 
 function RouteComponent() {
-  const { slope, intercept } = useSizes()
-
   return (
-    <div className="feature">
+    <div className="feature space-y-4">
       <SizesForm />
-      <span>
-        {' '}
-        Slope: {slope} Intercept: {intercept}
-      </span>
+      <div className="grid grid-cols-12">
+        <div className="col-span-3">
+          <SizesTable />
+        </div>
+      </div>
     </div>
   )
 }

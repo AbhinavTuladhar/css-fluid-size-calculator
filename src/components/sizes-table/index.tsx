@@ -24,7 +24,7 @@ const FluidSizeRow: FC<FluidSizeProps> = ({ screenSize, minValue, maxValue, slop
   <TableRow key={`screen-size-${screenSize}`}>
     <TableCell className="font-medium">{screenSize}</TableCell>
     <TableCell className="text-right">
-      {calculateFluidSize({ screenSize, minValue, maxValue, slope, intercept }).toFixed(4)}
+      {calculateFluidSize({ screenSize, minValue, maxValue, slope, intercept }).toFixed(0)}
     </TableCell>
   </TableRow>
 )

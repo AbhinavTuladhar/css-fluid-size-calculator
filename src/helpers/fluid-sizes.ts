@@ -48,5 +48,5 @@ export const getClampExpression = ({
   const slopeVw = formatNumber(slope * 100)
   const interceptRem = formatNumber(intercept / 16)
 
-  return `clamp(${minValueRem}rem, ${slopeVw}vw + ${interceptRem}rem, ${maxValueRem}rem)`
+  return `clamp(${minValueRem}rem, ${slopeVw}vw ${intercept > 0 ? '+' : '-'} ${intercept > 0 ? interceptRem : -interceptRem}rem, ${maxValueRem}rem)`
 }

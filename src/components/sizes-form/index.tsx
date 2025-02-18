@@ -40,10 +40,6 @@ const SizesForm = () => {
     },
   })
 
-  const onSubmit = (data: SizesFormValues) => {
-    console.log(data)
-  }
-
   const handleChange = (
     field: ControllerRenderProps<SizesFormValues>,
     event: ChangeEvent<HTMLInputElement>,
@@ -71,10 +67,7 @@ const SizesForm = () => {
 
   return (
     <Form {...form}>
-      <form
-        onSubmit={form.handleSubmit(onSubmit)}
-        className="grid items-stretch gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-4"
-      >
+      <form className="grid items-stretch gap-x-4 gap-y-6 sm:grid-cols-2 lg:grid-cols-4">
         <InputBox>
           <FormField
             control={form.control}

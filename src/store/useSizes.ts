@@ -21,8 +21,8 @@ const updateStateAndRecalculate = (state: SizesState, newValues: Partial<SizesFo
 
 const useSizes = create<SizesState>(set => {
   const defaultValues: SizesFormValues = {
-    minValue: 1,
-    maxValue: 2,
+    minValue: 16,
+    maxValue: 32,
     minScreenSize: 360,
     maxScreenSize: 1366,
   }

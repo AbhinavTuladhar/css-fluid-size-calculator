@@ -70,22 +70,24 @@ const SizesChartBody: FC<SizesChartBodyProps> = ({ minValue, maxValue, slope, in
           dataKey="screenSize"
           tickLine={false}
           axisLine={false}
-          tickMargin={8}
+          offset={200}
           ticks={xAxisValues.filter((_, index) => index % 100 === 0)}
-          // tickFormatter={value => value.slice(0, 3)}
+          tickFormatter={value => ` ${value} `}
         />
         <YAxis
           dataKey="fluidSize"
           tickLine={false}
           unit="px"
           interval="preserveStartEnd"
-          tickCount={maxValue - minValue}
+          minTickGap={4}
+          max={32}
+          type="number"
         />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent hideLabel />} />
+        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Area
           dot={false}
           dataKey="fluidSize"
-          type="monotone"
+          type="monotoneX"
           stroke="var(--chart-1)"
           strokeWidth={3}
           fill="url(#colorUv)"

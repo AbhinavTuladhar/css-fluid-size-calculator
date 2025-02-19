@@ -11,6 +11,7 @@ import {
 } from '@/components/ui/chart'
 import { calculateFluidSize } from '@/helpers/fluid-sizes'
 import useSizes from '@/store/useSizes'
+import { formatNumber } from '@/utils/number.utils'
 
 const chartConfig = {
   desktop: {
@@ -67,9 +68,10 @@ const SizesChartBody: FC<SizesChartBodyProps> = ({ minValue, maxValue, slope, in
         </defs>
         <CartesianGrid vertical={true} color={'var(--border)'} />
         <XAxis
+          allowDuplicatedCategory={false}
           dataKey="screenSize"
           tickLine={false}
-          axisLine={false}
+          axisLine={true}
           offset={200}
           ticks={xAxisValues.filter((_, index) => index % 100 === 0)}
           tickFormatter={value => ` ${value} `}
@@ -83,14 +85,36 @@ const SizesChartBody: FC<SizesChartBodyProps> = ({ minValue, maxValue, slope, in
           max={32}
           type="number"
         />
-        <ChartTooltip cursor={false} content={<ChartTooltipContent />} />
         <Area
+          name="screenSize"
           dot={false}
           dataKey="fluidSize"
           type="monotoneX"
           stroke="var(--chart-1)"
           strokeWidth={3}
           fill="url(#colorUv)"
+        />
+        <ChartTooltip
+          // formatter={value => 'Value'}
+          label="{screenSize}"
+          labelFormatter={value => `Value: ${value}`}
+          content={
+            <ChartTooltipContent
+              hideLabel={true}
+              nameKey="screenSize"
+              formatter={(value, _name, props) => {
+                const screenSize = props.payload.screenSize // Get the screenSize from the payload
+                return (
+                  <div className="flex flex-col gap-y-2">
+                    <span> @{screenSize}px </span>
+                    <span className="font-semibold">
+                      Fluid Size: {formatNumber(value as number)}px
+                    </span>
+                  </div>
+                )
+              }}
+            />
+          }
         />
       </AreaChart>
     </ChartContainer>

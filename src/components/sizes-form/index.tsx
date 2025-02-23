@@ -74,7 +74,7 @@ const SizesForm = () => {
             name="minValue"
             render={({ field }) => (
               <FormItem>
-                <FormLabel>Min. Size</FormLabel>
+                <FormLabel>Min. Size (px)</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
@@ -90,7 +90,7 @@ const SizesForm = () => {
           render={({ field }) => (
             <InputBox>
               <FormItem>
-                <FormLabel>Max. Size</FormLabel>
+                <FormLabel>Max. Size (px)</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
@@ -106,7 +106,7 @@ const SizesForm = () => {
           render={({ field }) => (
             <InputBox>
               <FormItem>
-                <FormLabel>Min. Screen Size</FormLabel>
+                <FormLabel>Min. Screen Size (px)</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>
@@ -122,7 +122,7 @@ const SizesForm = () => {
           render={({ field }) => (
             <InputBox>
               <FormItem>
-                <FormLabel>Max Screen Size</FormLabel>
+                <FormLabel>Max Screen Size (px)</FormLabel>
                 <FormControl>
                   <Input {...field} type="number" onChange={event => handleChange(field, event)} />
                 </FormControl>

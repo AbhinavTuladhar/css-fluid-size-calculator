@@ -1,5 +1,5 @@
 import { SizesFormValues } from '@/types/'
-import { formatNumber } from '@/utils/number.utils'
+import { roundNumber } from '@/utils/number.utils'
 
 /**
  * Get the slope and intercept of the fluid size formula
@@ -43,10 +43,10 @@ export const getClampExpression = ({
   slope,
   intercept,
 }: Omit<FluidSizeProps, 'screenSize'>) => {
-  const minValueRem = formatNumber(minValue / 16)
-  const maxValueRem = formatNumber(maxValue / 16)
-  const slopeVw = formatNumber(slope * 100)
-  const interceptRem = formatNumber(intercept / 16)
+  const minValueRem = roundNumber(minValue / 16)
+  const maxValueRem = roundNumber(maxValue / 16)
+  const slopeVw = roundNumber(slope * 100)
+  const interceptRem = roundNumber(intercept / 16)
 
   return `clamp(${minValueRem}rem, ${slopeVw}vw ${intercept > 0 ? '+' : '-'} ${intercept > 0 ? interceptRem : -interceptRem}rem, ${maxValueRem}rem)`
 }

@@ -11,7 +11,6 @@ import {
 } from '@/components/ui/chart'
 import { calculateFluidSize } from '@/helpers/fluid-sizes'
 import useSizes from '@/store/useSizes'
-import { formatNumber } from '@/utils/number.utils'
 
 const chartConfig = {
   desktop: {
@@ -108,7 +107,7 @@ const SizesChartBody: FC<SizesChartBodyProps> = ({ minValue, maxValue, slope, in
                   <div className="flex flex-col gap-y-2">
                     <span> @{screenSize}px </span>
                     <span className="font-semibold">
-                      Fluid Size: {formatNumber(value as number)}px
+                      Fluid Size: {Math.floor(value as number)}px
                     </span>
                   </div>
                 )

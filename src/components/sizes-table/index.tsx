@@ -11,6 +11,7 @@ import {
 import { SCREEN_SIZES } from '@/core/constants'
 import { calculateFluidSize } from '@/helpers/fluid-sizes'
 import useSizes from '@/store/useSizes'
+import { roundNumber } from '@/utils/number.utils'
 
 interface FluidSizeProps {
   screenSize: number
@@ -20,14 +21,17 @@ interface FluidSizeProps {
   intercept: number
 }
 
-const FluidSizeRow: FC<FluidSizeProps> = ({ screenSize, minValue, maxValue, slope, intercept }) => (
-  <TableRow key={`screen-size-${screenSize}`}>
-    <TableCell className="font-medium">{screenSize}</TableCell>
-    <TableCell className="text-right">
-      {calculateFluidSize({ screenSize, minValue, maxValue, slope, intercept }).toFixed(0)}
-    </TableCell>
-  </TableRow>
-)
+const FluidSizeRow: FC<FluidSizeProps> = ({ screenSize, minValue, maxValue, slope, intercept }) => {
+  const fluidSize = calculateFluidSize({ screenSize, minValue, maxValue, slope, intercept })
+
+  return (
+    <TableRow key={`screen-size-${screenSize}`}>
+      <TableCell className="font-medium">{screenSize}</TableCell>
+      <TableCell className="text-right">{Math.floor(fluidSize)}</TableCell>
+      <TableCell className="text-right">{roundNumber(Math.floor(fluidSize) / 16, 4)}</TableCell>
+    </TableRow>
+  )
+}
 
 const SizesTable = () => {
   const { slope, intercept, minValue, maxValue } = useSizes()
@@ -36,8 +40,9 @@ const SizesTable = () => {
     <Table>
       <TableHeader>
         <TableRow>
-          <TableHead className="w-[100px]">Screen Size</TableHead>
-          <TableHead className="text-right">Fluid Size</TableHead>
+          <TableHead className="w-[100px]">Screen Size (px)</TableHead>
+          <TableHead className="text-right">Fluid Size (px)</TableHead>
+          <TableHead className="text-right">Fluid Size (rem)</TableHead>
         </TableRow>
       </TableHeader>
       <TableBody>

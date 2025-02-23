@@ -99,6 +99,7 @@
   --radius-md: calc(var(--radius) - 2px);
   --radius-lg: var(--radius);
   --radius-xl: calc(var(--radius) + 4px);
+  --text-heading: clamp(1.25rem, 1.1111vw + 1rem, 2rem);
 }
 
 @layer base {
